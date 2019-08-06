@@ -38,22 +38,18 @@ If you have containers that should be available throughout the app, like a `Navi
 // In app/reducers.js
 
 ...
-import { combineReducers } from 'redux';
+import { combineReducers } from 'redux-immutable';
 ...
 
 import navigationBarReducer from 'containers/NavigationBar/reducer';
 
-export default function createReducer(injectedReducers = {}) {
-  const rootReducer = combineReducers({
-    global: globalReducer,
-    language: languageProviderReducer,
-    router: connectRouter(history),
-    navigationBar: navigationBarReducer,
-    ...injectedReducers,
-  });
-
-  return rootReducer;
-}
+export default combineReducers({
+  route: routeReducer,
+  global: globalReducer,
+  language: languageProviderReducer,
+  navigationBar: navigationBarReducer,
+  ...asyncReducers,
+});
 ```
 
 ## Exclude modules from Babel processing

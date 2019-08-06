@@ -1,15 +1,14 @@
-import produce from 'immer';
+import { fromJS } from 'immutable';
 
 import homeReducer from '../reducer';
 import { changeUsername } from '../actions';
 
-/* eslint-disable default-case, no-param-reassign */
 describe('homeReducer', () => {
   let state;
   beforeEach(() => {
-    state = {
+    state = fromJS({
       username: '',
-    };
+    });
   });
 
   it('should return the initial state', () => {
@@ -19,9 +18,7 @@ describe('homeReducer', () => {
 
   it('should handle the changeUsername action correctly', () => {
     const fixture = 'mxstbr';
-    const expectedResult = produce(state, draft => {
-      draft.username = fixture;
-    });
+    const expectedResult = state.set('username', fixture);
 
     expect(homeReducer(state, changeUsername(fixture))).toEqual(expectedResult);
   });

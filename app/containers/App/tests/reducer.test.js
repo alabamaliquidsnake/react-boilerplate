@@ -1,20 +1,19 @@
-import produce from 'immer';
+import { fromJS } from 'immutable';
 
 import appReducer from '../reducer';
 import { loadRepos, reposLoaded, repoLoadingError } from '../actions';
 
-/* eslint-disable default-case, no-param-reassign */
 describe('appReducer', () => {
   let state;
   beforeEach(() => {
-    state = {
+    state = fromJS({
       loading: false,
       error: false,
       currentUser: false,
-      userData: {
+      userData: fromJS({
         repositories: false,
-      },
-    };
+      }),
+    });
   });
 
   it('should return the initial state', () => {
@@ -23,11 +22,10 @@ describe('appReducer', () => {
   });
 
   it('should handle the loadRepos action correctly', () => {
-    const expectedResult = produce(state, draft => {
-      draft.loading = true;
-      draft.error = false;
-      draft.userData.repositories = false;
-    });
+    const expectedResult = state
+      .set('loading', true)
+      .set('error', false)
+      .setIn(['userData', 'repositories'], false);
 
     expect(appReducer(state, loadRepos())).toEqual(expectedResult);
   });
@@ -39,11 +37,10 @@ describe('appReducer', () => {
       },
     ];
     const username = 'test';
-    const expectedResult = produce(state, draft => {
-      draft.userData.repositories = fixture;
-      draft.loading = false;
-      draft.currentUser = username;
-    });
+    const expectedResult = state
+      .setIn(['userData', 'repositories'], fixture)
+      .set('loading', false)
+      .set('currentUser', username);
 
     expect(appReducer(state, reposLoaded(fixture, username))).toEqual(
       expectedResult,
@@ -54,10 +51,7 @@ describe('appReducer', () => {
     const fixture = {
       msg: 'Not found',
     };
-    const expectedResult = produce(state, draft => {
-      draft.error = fixture;
-      draft.loading = false;
-    });
+    const expectedResult = state.set('error', fixture).set('loading', false);
 
     expect(appReducer(state, repoLoadingError(fixture))).toEqual(
       expectedResult,

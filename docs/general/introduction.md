@@ -19,7 +19,7 @@ Here's a curated list of packages that you should be at least familiar with befo
 - [ ] [Redux](http://redux.js.org/)
 - [ ] [Redux Saga](https://redux-saga.github.io/redux-saga/)
 - [ ] [Reselect](https://github.com/reactjs/reselect)
-- [ ] [Immer](https://github.com/mweststrate/immer)
+- [ ] [ImmutableJS](https://facebook.github.io/immutable-js/)
 - [ ] [Styled Components](https://github.com/styled-components/styled-components)
 
 ### Unit Testing
